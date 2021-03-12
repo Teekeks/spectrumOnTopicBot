@@ -28,7 +28,7 @@ cooldown_till: datetime.datetime = None
 
 def save_state():
     with open('state.json', 'w') as fi:
-        json.dump({'cooldown': cooldown_till}, fi)
+        json.dump({'cooldown': cooldown_till.isoformat() if cooldown_till is not None else None}, fi)
 
 
 def load_state():
@@ -39,7 +39,8 @@ def load_state():
             data = json.load(fi)
     except:
         pass
-    cooldown_till = data.get('cooldown', None)
+    datestr = data.get('cooldown', None)
+    cooldown_till = datestr if datestr is None else datetime.datetime.fromisoformat(datestr)
 
 
 def build_embed(title: str = None,
