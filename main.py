@@ -145,12 +145,13 @@ async def on_message(message: discord.Message):
                 len(message.content) > (len(TOPIC_COMMAND) + 1)
             ]):
         topic = message.content[len(TOPIC_COMMAND) + 1:].strip()
-        logging.info(f'new topic send to review: "{topic}"')
         if cooldown_till is not None:
             # cant request new topic while cooldown is going
             await message.reply(embed=build_embed(title=f'{TOPIC_COMMAND} is on cooldown!',
                                                   color=discord.Color.red()))
+            logging.info(f'cant send topic "{topic}" for approval while on cooldown!')
             return
+        logging.info(f'new topic send to review: "{topic}"')
         # handle new topic
         # send confirmation
         confirm_embed = build_embed(title='Topic sent for review',
