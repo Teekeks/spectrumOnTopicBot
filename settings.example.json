@@ -1,0 +1,21 @@
+{
+  "token": "",
+  "prefix": "!",
+  "commands": {
+    "topic": "topic"
+    },
+  "reacts": {
+    "approve": "<:this:590709294609989662>",
+    "deny": "<:oofpride:591648692604502035>"
+  },
+  "channels": {
+    "moderation": 629708936290762752,
+    "topic": 629708558967111710
+  },
+  "topic_channel_prefix": "Current discussion topic: ",
+  "cooldown": {
+    "hours": 1,
+    "minutes": 0,
+    "seconds": 0
+  }
+}
