@@ -26,6 +26,22 @@ COOLDOWN = datetime.timedelta(hours=cfg['cooldown']['hours'],
 cooldown_till: datetime.datetime = None
 
 
+def save_state():
+    with open('state.json', 'w') as fi:
+        json.dump({'cooldown': cooldown_till}, fi)
+
+
+def load_state():
+    global cooldown_till
+    data = {}
+    try:
+        with open('state.json', 'r') as fi:
+            data = json.load(fi)
+    except:
+        pass
+    cooldown_till = data.get('cooldown', None)
+
+
 def build_embed(title: str = None,
                 color: Any = discord.Color.blue(),
                 body: str = None,
@@ -67,6 +83,7 @@ async def topic_approve(topic: str,
                                                     color=discord.Color.green(),
                                                     body=topic))
     cooldown_till = datetime.datetime.now() + COOLDOWN
+    save_state()
 
 
 async def topic_denied(topic: str,
@@ -181,6 +198,7 @@ async def check_cooldown():
             if datetime.datetime.now() >= cooldown_till:
                 # cooldown reached!
                 cooldown_till = None
+                save_state()
                 logging.info('cooldown reached')
                 await CHANNEL_MODERATION.send(embed=build_embed(title='Cooldown elapsed'))
                 await CHANNEL_TOPIC.send(embed=build_embed(title='Topic submissions are now open'))
@@ -197,6 +215,9 @@ async def start_bot():
 
 asyncio.ensure_future(start_bot())
 asyncio.ensure_future(check_cooldown())
+
+logging.info('loading state')
+load_state()
 
 logging.info('starting up')
 asyncio.get_event_loop().run_forever()
