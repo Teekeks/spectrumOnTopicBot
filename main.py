@@ -142,7 +142,7 @@ async def on_message(message: discord.Message):
                 message.content.startswith(f'{TOPIC_COMMAND} '),
                 len(message.content) > (len(TOPIC_COMMAND) + 1)
             ]):
-        topic = message.content[len(TOPIC_COMMAND) + 1:]
+        topic = message.content[len(TOPIC_COMMAND) + 1:].strip()
         logging.info(f'new topic send to review: "{topic}"')
         if cooldown_till is not None:
             # cant request new topic while cooldown is going
