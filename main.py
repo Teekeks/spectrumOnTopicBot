@@ -147,7 +147,7 @@ async def on_reaction_add(reaction: discord.Reaction, user: discord.User):
         # remove own reactions
         for re in reaction.message.reactions:
             if re.me:
-                await reaction.remove(client.user)
+                await re.remove(client.user)
     # ignore all other reacts
 
 
