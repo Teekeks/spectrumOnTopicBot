@@ -126,8 +126,10 @@ async def on_reaction_add(reaction: discord.Reaction, user: discord.User):
         await topic_denied(topic, author, int(embed.footer.text))
         remove_own = True
     if remove_own:
-        # remove own reaction
-        await reaction.remove(client.user)
+        # remove own reactions
+        for re in reaction.message.reactions:
+            if re.me:
+                await reaction.remove(client.user)
     # ignore all other reacts
 
 
