@@ -173,7 +173,7 @@ async def on_message(message: discord.Message):
         # handle new topic
         # send confirmation
         confirm_embed = build_embed(title='Topic sent for review',
-                                    body=topic,
+                                    # body=topic,
                                     color=discord.Color.blurple())
         await message.reply(embed=confirm_embed)
         # send test message
